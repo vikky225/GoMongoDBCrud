@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -14,14 +15,14 @@ func main() {
 	router.GET("/user/:id", uc.GetUser)
 	router.POST("/user", uc.CreateUser)
 	router.DELETE("/user/:id", uc.DeleteUser)
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8090", router)
 }
 
 func getSession() *mgo.Session {
 
-	session, err := mgo.Dial("mongodb://localhost:27107")
+	session, err := mgo.Dial("mongodb://127.0.0.1:27017")
 	if err != nil {
-		panic(err)
+		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
 	return session
 }
